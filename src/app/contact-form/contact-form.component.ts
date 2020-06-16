@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { distinctUntilChanged, filter, takeUntil } from 'rxjs/operators';
-import { UpdateCurrentContact } from '../store/actions/contact.actions';
+import { updateCurrentContact } from '../store/actions/contact.actions';
 import { selectCurrentContact } from '../store/selectors/contact.selectors';
 import { AppState } from '../store/state/app.state';
 
@@ -31,7 +31,7 @@ export class ContactFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.patientForm.valueChanges.pipe(takeUntil(this.destroySub))
-      .subscribe(contact => this.store.dispatch(new UpdateCurrentContact(contact)));
+      .subscribe(contact => this.store.dispatch(updateCurrentContact({ contact })));
 
     this.store.select(selectCurrentContact)
       .pipe(

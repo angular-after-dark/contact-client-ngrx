@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Contact } from '../contact.model';
-import { UpdateCurrentContact } from '../store/actions/contact.actions';
+import { updateCurrentContact } from '../store/actions/contact.actions';
 import { selectAllContacts } from '../store/selectors/contact.selectors';
 import { AppState } from '../store/state/app.state';
 
@@ -18,7 +18,7 @@ export class ContactListComponent implements OnInit {
   constructor(private readonly store: Store<AppState>) { }
 
   select(contact: Contact) {
-    this.store.dispatch(new UpdateCurrentContact(contact));
+    this.store.dispatch(updateCurrentContact({ contact }));
   }
 
   ngOnInit() {

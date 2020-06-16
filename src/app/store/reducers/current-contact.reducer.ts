@@ -1,8 +1,13 @@
+import { Action, createReducer, on } from '@ngrx/store';
 import { Contact } from 'src/app/contact.model';
-import { ContactActions, ContactActionTypes } from '../actions/contact.actions';
+import { updateCurrentContact } from '../actions/contact.actions';
+import { initialAppState } from '../state/app.state';
 
-export function currentContactReducer(state: Contact, action: ContactActions) {
-  if (action.type === ContactActionTypes.UPDATE_CURRENT_CONTACT) {
-    return action.payload;
-  }
+const reducer = createReducer(
+  initialAppState.currentContact,
+  on(updateCurrentContact, (state, { contact }) => contact)
+);
+
+export function currentContactReducer(state: Contact, action: Action) {
+  return reducer(state, action);
 }

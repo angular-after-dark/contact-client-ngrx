@@ -1,11 +1,12 @@
-import { ContactActions, ContactActionTypes } from '../actions/contact.actions';
-import { ContactState, initialContactState, contactAdapter } from '../state/contact.state';
+import { Action, createReducer, on } from '@ngrx/store';
+import { saveContact } from '../actions/contact.actions';
+import { contactAdapter, ContactState, initialContactState } from '../state/contact.state';
 
-export function contactReducer(state: ContactState = initialContactState, action: ContactActions) {
-  switch (action.type) {
-    case ContactActionTypes.SAVE_CONTACT:
-      return contactAdapter.upsertOne(action.payload, state);
-    default:
-      return state;
-  }
+const reducer = createReducer(
+  initialContactState,
+  on(saveContact, (state, { contact }) => contactAdapter.upsertOne(contact, state))
+);
+
+export function contactReducer(state: ContactState, action: Action) {
+  return reducer(state, action);
 }
